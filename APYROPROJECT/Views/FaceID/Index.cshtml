@@ -1,0 +1,153 @@
+﻿@{
+    Layout = "/Views/Shared/_layoutforSample.cshtml";
+
+}
+
+
+
+
+
+
+
+
+
+<script>
+    var data ;
+    var video = document.getElementById('video');
+    var canvas = document.createElement('canvas');
+    var context = canvas.getContext('2d');
+    var image = document.getElementById('image');
+
+    navigator.mediaDevices.getUserMedia({ video: true })
+        .then(function (stream) {
+            video.srcObject = stream;
+            video.play();
+        })
+        .catch(function (err) {
+            console.log(err);
+        })
+
+    document.getElementById('capture').addEventListener('click', function ()
+    {
+        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+        var imageData = canvas.toDataURL();
+        image.src = imageData;
+        image.style.display = 'block';
+
+        data = 
+        {
+            name: 'ASPNETCORE',
+            age: 30,
+            imageData: imageData
+        };
+       
+
+
+        var capturedImageModal = document.getElementById('capturedImageModal');
+        capturedImageModal.src = imageData;
+        capturedImageModal.style.width = "820px"; // Set a fixed width
+        capturedImageModal.style.height = "520px"; // Set a fixed height
+
+
+    });
+</script>
+
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body d-flex justify-content-center">
+                <img id="capturedImageModal" src="" class="img-fluid mx-auto" alt="Captured Image" >
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Retake</button>
+                <button type="button" class="btn btn-success" onclick="openSecondModal()">Next</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<!-- Second Modal with Video -->
+<div class="modal fade" id="secondModal" tabindex="-1" role="dialog" aria-labelledby="secondModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="secondModalLabel">Second Modal with Video</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modalss">
+                <div class="d-flex justify-content-center">
+                    <!-- Adjust the width and height of the video to match the desired size -->
+                    <video id="videoInModal" width="720" height="560" autoplay muted></video>
+                    <div id="canvasContainer" style="position: absolute; top: 46%; left: 50%; transform: translate(-50%, -50%);"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="none">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+    function openSecondModal() 
+    {
+        // Show the second modal
+        $('#exampleModalCenter').modal('hide');
+
+
+
+        fetch('/FaceID/UploadImage', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        })
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (data) {
+                console.log(data);
+            })
+            .catch(function (err) {
+                console.log(err);
+            });
+
+
+        $('#secondModal').modal('show');
+
+        // Start the video in the second modal
+        startVideoInModal();
+    }
+
+    // Function to start the video in the second modal
+    function startVideoInModal() {
+        navigator.getUserMedia(
+            { video: {} },
+            stream => {
+                const videoElementInModal = document.getElementById('videoInModal');
+                videoElementInModal.srcObject = stream;
+            },
+            err => console.error(err)
+        );
+    }
+</script>

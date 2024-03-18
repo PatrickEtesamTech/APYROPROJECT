@@ -1,0 +1,37 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "/Views/Shared/_layoutforhomepage2.cshtml";
+}
+
+
+
+<div class="col-md-5">
+    <div class="widget p-5" style="background-color:#fff">
+        <div class="d-flex align-items-center justify-content-center">
+            <img src="~/EDUCATORSTUDENTBACKGROUND.png" alt="Image description" id="logo-image" />
+        </div>
+
+        <div class="row justify-content-center mt-3">
+            <div class="col-md-auto">
+                <a class="btn btn-success" style="background-color: #16BDB3; color: black; font-weight: bold; width: 250px;"
+                   href="@Url.Action("videoattendance", "Homepage")">Educator's Sign Up here</a>
+            </div>
+        </div>
+
+        <div class="row justify-content-center mt-3">
+            <div class="col-md-auto">
+                <a class="btn btn-success" style="background-color: #16BDB3; color: black; font-weight: bold; width: 250px;"
+                   href="@Url.Action("Index", "FaceID")">Student's Sign Up here</a>
+            </div>
+        </div>
+
+        <div class="row justify-content-center mt-3">
+            <div class="col-md-auto">
+                <a style="color: #2647BB; font-weight: bold; text-decoration: none; font-size: 18px; width: 150px;"
+                   href="#">Sign In</a>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,156 @@
+﻿@using System.Web.Optimization
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.syncfusion.com/ej2/22.1.34/bootstrap5-dark.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/APYROPROJECT.styles.css" asp-append-version="true" />
+    <script src="https://cdn.syncfusion.com/ej2/22.1.34/dist/ej2.min.js"></script>
+
+
+
+
+
+    @*
+
+    <script src="@Url.Content("https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.6.0/dist/tf.js")"></script>
+    <script src="@Url.Content("https://cdn.jsdelivr.net/npm/@tensorflow-models/face-landmarks-detection")"></script>
+
+    <script src="@Url.Content("https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh@0.1/face_mesh.js")"></script>
+
+    <script defer src="~/face-api.min.js"></script>*@
+  
+    <script defer src="~/faceverification.js"></script>
+
+
+
+
+    <style>
+
+
+          body {
+            margin: 0;
+            padding: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+         
+        canvas {
+           position: absolute; 
+           width:480px;
+           height:480px;
+        }
+      
+        
+    
+    </style>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+    <div>
+
+
+
+
+
+
+
+
+
+
+
+        @*
+  <video id="video" width="640" height="480"></video>
+        <canvas id="overlay" width="640" height="480"></canvas>
+
+        <script>
+            // Load the facemesh model
+            let model;
+            async function loadModel() {
+                model = await facemesh.load();
+            }
+
+            // Initialize the video stream and start face landmark detection
+            async function startCamera() {
+                const video = document.getElementById('video');
+                const stream = await navigator.mediaDevices.getUserMedia({ 'video': true });
+                video.srcObject = stream;
+                await video.play();
+
+                const canvas = document.getElementById('overlay');
+                const displaySize = { width: video.width, height: video.height };
+
+                // Run facial landmark detection
+                async function detect() {
+                    const predictions = await model.estimateFaces(video);
+                    const context = canvas.getContext('2d');
+                    context.clearRect(0, 0, canvas.width, canvas.height);
+
+                    if (predictions.length > 0) {
+                        // Draw face mesh for each detected face
+                        predictions.forEach(prediction => {
+                            const keypoints = prediction.scaledMesh;
+
+                            // Draw face mesh points
+                            for (let i = 0; i < keypoints.length; i++) {
+                                const [x, y] = keypoints[i];
+                                context.beginPath();
+                                context.arc(x, y, 1, 0, 2 * Math.PI);
+                                context.fillStyle = 'red';
+                                context.fill();
+                            }
+
+                            // Draw face mesh connections
+                            for (let i = 0; i < TRIANGULATION.length / 3; i++) {
+                                const points = TRIANGULATION[i];
+                                context.beginPath();
+                                context.moveTo(keypoints[points[0]][0], keypoints[points[0]][1]);
+                                context.lineTo(keypoints[points[1]][0], keypoints[points[1]][1]);
+                                context.lineTo(keypoints[points[2]][0], keypoints[points[2]][1]);
+                                context.closePath();
+                                context.strokeStyle = 'blue';
+                                context.stroke();
+                            }
+                        });
+                    }
+
+                    requestAnimationFrame(detect);
+                }
+
+                detect();
+            }
+
+            // Load the model and start the camera when the window is loaded
+            window.onload = async () => {
+                await loadModel();
+                await startCamera();
+            };
+
+            // Face mesh triangulation (for connecting face landmarks)
+            const TRIANGULATION = [
+                [33, 10, 163],
+                [163, 7, 144],
+                // ... (more connections can be added)
+            ];
+        </script>
+
+
+        *@
+
+      
+
+
+        @RenderBody()
+    </div>
+</body>
+
+</html>
